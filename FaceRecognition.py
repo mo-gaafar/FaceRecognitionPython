@@ -4,6 +4,7 @@ import pickle
 import time
 import cv2
 import os
+import numpy as np
 
 #find path of xml file containing haarcascade file 
 cascPathface = os.path.dirname(
@@ -13,7 +14,7 @@ faceCascade = cv2.CascadeClassifier(cascPathface)
 # load the known faces and embeddings saved in last file
 data = pickle.loads(open('face_enc', "rb").read())
 
-recognized = ['Names']
+np.recognized = ['Names: ']
 recognizedcounter = 0
 
 print("Streaming started")
@@ -65,9 +66,10 @@ while True:
 
         #adds recognized name in order of recogniton
         #if function to not allow duplicates
-        if recognizedcounter == 0 or recognized[recognizedcounter] != name:
-            recognized.append(name)
-            recognizedcounter +=1   
+        if name != 'Unknown':
+            if recognizedcounter == 0 or np.recognized[recognizedcounter] != name:
+                np.recognized.append(name)
+                recognizedcounter +=1   
 
         # loop over the recognized faces
         for ((x, y, w, h), name) in zip(faces, names):
@@ -77,7 +79,8 @@ while True:
             cv2.putText(frame, name, (x, y), cv2.FONT_HERSHEY_SIMPLEX,
              0.75, (255, 0, 255), 2)
     cv2.imshow("Frame", frame)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    if cv2.waitKey(1) == ord('q'):
+        np.savetxt('Recognized_Array.csv',np.recognized , delimiter= ",",fmt = '%s') 
         break
 video_capture.release()
 cv2.destroyAllWindows()
