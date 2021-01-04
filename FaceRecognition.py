@@ -14,7 +14,7 @@ faceCascade = cv2.CascadeClassifier(cascPathface)
 # load the known faces and embeddings saved in last file
 data = pickle.loads(open('face_enc', "rb").read())
 
-np.recognized = ['Names: ']
+np.recognized = []
 recognizedcounter = 0
 
 print("Streaming started")
@@ -80,7 +80,7 @@ while True:
              0.75, (255, 0, 255), 2)
     cv2.imshow("Frame", frame)
     if cv2.waitKey(1) == ord('q'):
-        np.savetxt('Recognized_Array.csv',np.recognized , delimiter= ",",fmt = '%s') 
+        np.savetxt('Recognized_Array.csv',np.recognized , delimiter= ",",fmt = '%s',header = 'Names Recognized') 
         break
 video_capture.release()
 cv2.destroyAllWindows()
