@@ -67,7 +67,7 @@ while True:
         #adds recognized name in order of recogniton
         #if function to not allow duplicates
         if name != 'Unknown':
-            if recognizedcounter == 0 or np.recognized[recognizedcounter] != name:
+            if name not in np.recognized:
                 np.recognized.append(name)
                 recognizedcounter +=1   
 
